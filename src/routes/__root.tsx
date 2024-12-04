@@ -39,7 +39,7 @@ function RootComponent() {
   return (
     <>
       <header className="flex sticky h-16 shrink-0 items-center justify-between gap-2 mb-4 border-b px-4">
-        <h1 className="text-3xl font-bold">EVM dApp</h1>
+        <h1 className="text-3xl font-bold">Bugswap</h1>
         <nav className="flex gap-4 text-lg items-center">
           <Link
             to="/"
@@ -48,7 +48,7 @@ function RootComponent() {
             }}
             activeOptions={{ exact: true }}
           >
-            Mint
+            Swap
           </Link>{" "}
         </nav>
         <ConnectWallet />
