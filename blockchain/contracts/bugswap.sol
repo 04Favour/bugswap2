@@ -22,14 +22,31 @@ contract BugSwap {
         _;
     }
 
-    function swap(uint256 amountA) external {
+    function swap(uint256 amountA, uint256 minAmountB) external {
         require(tokenA.transferFrom(msg.sender, address(this), amountA), "Transfer failed");
-        uint256 amountB = amountA; // Simple 1:1 swap for demonstration
+
+        uint256 amountB = calculateAmountB(amountA, minAmountB);
+        
+        require(tokenB.balanceOf(address(this)) >= amountB, "Insufficient balance");
+        
         require(tokenB.transfer(msg.sender, amountB), "Transfer failed");
     }
 
     function setTokens(address _tokenA, address _tokenB) external onlyOwner {
         tokenA = IERC20(_tokenA);
         tokenB = IERC20(_tokenB);
+    }
+
+    function calculateAmountB(uint256 amountA, uint256 minAmountB) internal view returns (uint256) {
+        // Assuming a constant product formula (like Uniswap V2)
+        uint256 totalSupply = tokenA.totalSupply();
+        uint256 reserveA = tokenA.balanceOf(address(this));
+        uint256 reserveB = tokenB.balanceOf(address(this));
+        
+        if (totalSupply == 0) {
+            return amountA * reserveB / reserveA;
+        } else {
+            return amountA * reserveB / totalSupply;
+        }
     }
 }

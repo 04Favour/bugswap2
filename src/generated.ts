@@ -42,7 +42,10 @@ export const bugSwapAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'amountA', internalType: 'uint256', type: 'uint256' }],
+    inputs: [
+      { name: 'amountA', internalType: 'uint256', type: 'uint256' },
+      { name: 'minAmountB', internalType: 'uint256', type: 'uint256' },
+    ],
     name: 'swap',
     outputs: [],
     stateMutability: 'nonpayable',
